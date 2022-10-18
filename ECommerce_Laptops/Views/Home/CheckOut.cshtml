@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "CheckOut";
+}
+
+<h2>CheckOut</h2>
+
+@if (TempData["cart"] != null)
+{
+
+
+    <table class="table table-responsive" style="background-color: aliceblue; color: floralwhite; ">
+
+        <thead>
+            <tr style="color:black;">
+                <th>ID</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>BILL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in TempData["cart"] as List<ECommerce_Laptops.Models.Cart>)
+            {
+
+                <tr style="color:black;">
+                    <td>@item.ProductId</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.Price</td>
+                    <td>@item.qty</td>
+                    <td>@item.bill</td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="@Url.Action("remove", new {id=@item.ProductId})">&#10008;</a>
+                    </td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td style="color:black;">@TempData["total"]</td>
+
+            </tr>
+        </tfoot>
+
+    </table>
+
+
+
+
+
+}
+else
+{
+    <h2 style="color:red"> Cart is empty....</h2>
+    @Html.ActionLink("Go Back", "Index", "Home")
+}
+
+
+@if (TempData["cart"] != null)
+{
+    using (Html.BeginForm())
+    {
+        <input type="submit" value="Confirm" class="btn btn-primary" />
+    }
+}
+
